@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@excalidraw/excalidraw": "^0.18.0",
+    "@uploadthing/react": "^7.3.2",
     "browser-fs-access": "^0.38.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -23,7 +24,8 @@
     "pako": "^2.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "tailwind-merge": "^3.3.1"
+    "tailwind-merge": "^3.3.1",
+    "uploadthing": "^7.7.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
