@@ -6,7 +6,7 @@ import type { Theme } from "@excalidraw/excalidraw/element/types";
 export const AppMainMenu: React.FC<{
   theme: Theme | "system";
   setTheme: (theme: Theme | "system") => void;
-  setLangCode: (langCode: string) => void;
+  handleLangCodeChange: (langCode: string) => void;
 }> = React.memo((props) => {
   return (
     <MainMenu>
@@ -28,10 +28,7 @@ export const AppMainMenu: React.FC<{
         onSelect={props.setTheme}
       />
       <MainMenu.ItemCustom>
-        <LanguageList
-          style={{ width: "100%" }}
-          setLangCode={props.setLangCode}
-        />
+        <LanguageList handleLangCodeChange={props.handleLangCodeChange} />
       </MainMenu.ItemCustom>
       <MainMenu.DefaultItems.ChangeCanvasBackground />
     </MainMenu>

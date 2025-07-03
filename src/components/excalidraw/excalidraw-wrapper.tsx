@@ -1,7 +1,7 @@
 "use client";
 
 import "@excalidraw/excalidraw/index.css";
-import { Excalidraw, WelcomeScreen } from "@excalidraw/excalidraw";
+import { Excalidraw } from "@excalidraw/excalidraw";
 import { useEffect, useRef, useState } from "react";
 import {
   AppState,
@@ -18,13 +18,13 @@ import { STORAGE_KEYS } from "@/config/app_constants";
 import { getPreferredLanguage } from "./app-language/language-detector";
 import { AppMainMenu } from "./AppMainMenu";
 import { useHandleAppTheme } from "@/hooks/useHandleAppTheme";
+import { AppWelcomeScreen } from "./AppWelcomeScreen";
 
 export default function ExcalidrawWrapper() {
   const [excalidrawAPI, excalidrawRefCallback] =
     useCallbackRefState<ExcalidrawImperativeAPI>();
-  const [langCode, setLangCode] = useState(
-    localStorage.getItem(STORAGE_KEYS.LOCAL_STORAGE_LANGUAGE) || "zh-TW",
-  );
+  const savedLang = localStorage.getItem(STORAGE_KEYS.LOCAL_STORAGE_LANGUAGE);
+  const [langCode, setLangCode] = useState(savedLang || getPreferredLanguage());
   const { editorTheme, appTheme, setAppTheme } = useHandleAppTheme();
 
   // 使用 resolvablePromise 來處理初始數據
@@ -93,7 +93,6 @@ export default function ExcalidrawWrapper() {
       const scene = await initializeScene();
       initialStatePromiseRef.current.promise.resolve(scene);
     };
-    setLangCode(getPreferredLanguage());
 
     loadInitialScene();
   }, []);
@@ -171,6 +170,11 @@ export default function ExcalidrawWrapper() {
     };
   }, [excalidrawAPI]);
 
+  function handleLangCodeChange(langCode: string) {
+    setLangCode(langCode);
+    localStorage.setItem(STORAGE_KEYS.LOCAL_STORAGE_LANGUAGE, langCode);
+  }
+
   return (
     <div style={{ height: "100vh", width: "100%" }}>
       <Excalidraw
@@ -188,12 +192,9 @@ export default function ExcalidrawWrapper() {
         <AppMainMenu
           theme={appTheme}
           setTheme={(theme) => setAppTheme(theme)}
-          setLangCode={(langCode) => {
-            setLangCode(langCode);
-            localStorage.setItem(STORAGE_KEYS.LOCAL_STORAGE_LANGUAGE, langCode);
-          }}
+          handleLangCodeChange={handleLangCodeChange}
         />
-        <WelcomeScreen />
+        <AppWelcomeScreen />
       </Excalidraw>
     </div>
   );
