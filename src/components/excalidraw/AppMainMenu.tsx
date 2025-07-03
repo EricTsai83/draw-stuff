@@ -3,11 +3,13 @@ import React from "react";
 import { LanguageList } from "./app-language/LanguageList";
 import type { Theme } from "@excalidraw/excalidraw/element/types";
 
-export const AppMainMenu: React.FC<{
+interface AppMainMenuProps {
   theme: Theme | "system";
   setTheme: (theme: Theme | "system") => void;
   handleLangCodeChange: (langCode: string) => void;
-}> = React.memo((props) => {
+}
+
+function AppMainMenu(props: AppMainMenuProps) {
   return (
     <MainMenu>
       <MainMenu.DefaultItems.LoadScene />
@@ -32,4 +34,6 @@ export const AppMainMenu: React.FC<{
       <MainMenu.DefaultItems.ChangeCanvasBackground />
     </MainMenu>
   );
-});
+}
+
+export default React.memo(AppMainMenu);

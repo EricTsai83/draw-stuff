@@ -16,9 +16,9 @@ import { importFromLocalStorage } from "@/data/localStorage";
 import { resolvablePromise } from "@/lib/utils";
 import { STORAGE_KEYS } from "@/config/app_constants";
 import { getPreferredLanguage } from "./app-language/language-detector";
-import { AppMainMenu } from "./AppMainMenu";
+import AppMainMenu from "./AppMainMenu";
 import { useHandleAppTheme } from "@/hooks/useHandleAppTheme";
-import { AppWelcomeScreen } from "./AppWelcomeScreen";
+import AppWelcomeScreen from "./AppWelcomeScreen";
 
 export default function ExcalidrawWrapper() {
   const [excalidrawAPI, excalidrawRefCallback] =
@@ -104,7 +104,9 @@ export default function ExcalidrawWrapper() {
       const originalResetScene = excalidrawAPI.resetScene;
 
       // 重寫 resetScene 方法
-      excalidrawAPI.resetScene = (...args: any[]) => {
+      excalidrawAPI.resetScene = (
+        ...args: Parameters<typeof originalResetScene>
+      ) => {
         // 調用原始方法
         const result = originalResetScene.apply(excalidrawAPI, args);
 

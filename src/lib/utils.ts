@@ -5,21 +5,24 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-// 添加 resolvablePromise 函數
-export const resolvablePromise = <T>() => {
+// 定義可解析 Promise 的介面
+interface ResolvablePromise<T> extends Promise<T> {
+  resolve: (value: T | PromiseLike<T>) => void;
+  reject: (reason?: unknown) => void;
+}
+
+export const resolvablePromise = <T>(): ResolvablePromise<T> => {
   let resolve!: (value: T | PromiseLike<T>) => void;
-  let reject!: (reason?: any) => void;
+  let reject!: (reason?: unknown) => void;
 
   const promise = new Promise<T>((_resolve, _reject) => {
     resolve = _resolve;
     reject = _reject;
   });
 
-  (promise as any).resolve = resolve;
-  (promise as any).reject = reject;
-
-  return promise as Promise<T> & {
-    resolve: (value: T | PromiseLike<T>) => void;
-    reject: (reason?: any) => void;
-  };
+  // 使用 Object.assign 來添加方法，避免 any 類型
+  return Object.assign(promise, {
+    resolve,
+    reject,
+  }) as ResolvablePromise<T>;
 };

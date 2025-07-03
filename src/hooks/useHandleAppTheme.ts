@@ -1,5 +1,5 @@
 import { THEME } from "@excalidraw/excalidraw";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 
 import type { Theme } from "@excalidraw/excalidraw/element/types";
 

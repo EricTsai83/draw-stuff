@@ -3,7 +3,7 @@ import { WelcomeScreen } from "@excalidraw/excalidraw";
 import React from "react";
 import { LogIn } from "lucide-react";
 
-export const AppWelcomeScreen = React.memo(() => {
+function AppWelcomeScreen() {
   const { t } = useI18n();
   const headingContent = t("welcomeScreen.app.center_heading");
 
@@ -34,4 +34,6 @@ export const AppWelcomeScreen = React.memo(() => {
       </WelcomeScreen.Center>
     </WelcomeScreen>
   );
-});
+}
+
+export default React.memo(AppWelcomeScreen);
