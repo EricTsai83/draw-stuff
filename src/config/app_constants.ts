@@ -44,8 +44,8 @@ export const STORAGE_KEYS = {
   VERSION_DATA_STATE: "version-dataState",
   VERSION_FILES: "version-files",
   LOCAL_STORAGE_FILES: "excalidraw-files",
-
   IDB_LIBRARY: "excalidraw-library",
+  LOCAL_STORAGE_LANGUAGE: "i18nextLng",
 
   // do not use apart from migrations
   __LEGACY_LOCAL_STORAGE_LIBRARY: "excalidraw-library",

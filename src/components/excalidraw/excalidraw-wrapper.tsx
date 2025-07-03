@@ -2,7 +2,7 @@
 
 import "@excalidraw/excalidraw/index.css";
 import { Excalidraw, WelcomeScreen } from "@excalidraw/excalidraw";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   AppState,
   BinaryFiles,
@@ -15,10 +15,17 @@ import { useDebounce } from "@/hooks/useDebounce";
 import { importFromLocalStorage } from "@/data/localStorage";
 import { resolvablePromise } from "@/lib/utils";
 import { STORAGE_KEYS } from "@/config/app_constants";
+import { getPreferredLanguage } from "./app-language/language-detector";
+import { AppMainMenu } from "./AppMainMenu";
+import { useHandleAppTheme } from "@/hooks/useHandleAppTheme";
 
 export default function ExcalidrawWrapper() {
   const [excalidrawAPI, excalidrawRefCallback] =
     useCallbackRefState<ExcalidrawImperativeAPI>();
+  const [langCode, setLangCode] = useState(
+    localStorage.getItem(STORAGE_KEYS.LOCAL_STORAGE_LANGUAGE) || "zh-TW",
+  );
+  const { editorTheme, appTheme, setAppTheme } = useHandleAppTheme();
 
   // 使用 resolvablePromise 來處理初始數據
   const initialStatePromiseRef = useRef<{
@@ -86,6 +93,7 @@ export default function ExcalidrawWrapper() {
       const scene = await initializeScene();
       initialStatePromiseRef.current.promise.resolve(scene);
     };
+    setLangCode(getPreferredLanguage());
 
     loadInitialScene();
   }, []);
@@ -169,7 +177,22 @@ export default function ExcalidrawWrapper() {
         excalidrawAPI={excalidrawRefCallback}
         initialData={initialStatePromiseRef.current.promise}
         onChange={onChange}
+        UIOptions={{
+          canvasActions: {
+            toggleTheme: true,
+          },
+        }}
+        langCode={langCode}
+        theme={editorTheme}
       >
+        <AppMainMenu
+          theme={appTheme}
+          setTheme={(theme) => setAppTheme(theme)}
+          setLangCode={(langCode) => {
+            setLangCode(langCode);
+            localStorage.setItem(STORAGE_KEYS.LOCAL_STORAGE_LANGUAGE, langCode);
+          }}
+        />
         <WelcomeScreen />
       </Excalidraw>
     </div>

@@ -14,6 +14,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "encode": "link:@excalidraw/excalidraw/data/encode",
+    "i18next-browser-languagedetector": "^8.2.0",
     "idb-keyval": "^6.2.2",
     "lucide-react": "^0.525.0",
     "nanoid": "^5.1.5",
