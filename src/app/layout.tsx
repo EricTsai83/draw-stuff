@@ -4,6 +4,7 @@ import "./globals.css";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { extractRouterConfig } from "uploadthing/server";
 import { ourFileRouter } from "@/app/api/uploadthing/core";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,6 +41,7 @@ export default function RootLayout({
           routerConfig={extractRouterConfig(ourFileRouter)}
         />
         {children}
+        <SpeedInsights />
       </body>
     </html>
   );
