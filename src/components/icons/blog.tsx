@@ -9,6 +9,7 @@ export function Blog({ className }: { className?: string }) {
       viewBox="0 0 512 512"
       xmlSpace="preserve"
       fill="currentColor"
+      className={className}
     >
       <g>
         <path
