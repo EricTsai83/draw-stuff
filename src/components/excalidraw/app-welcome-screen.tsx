@@ -24,7 +24,7 @@ function AppWelcomeScreen() {
           <WelcomeScreen.Center.MenuItemHelp />
 
           <WelcomeScreen.Center.MenuItemLink
-            href="/login"
+            href="https://github.com/EricTsai83/draw-stuff"
             shortcut={null}
             icon={<Github className="w-4 h-4" />}
           >
